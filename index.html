@@ -1,0 +1,55 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>Arcade Game</title>
+    <meta content="width=device-width, initial-scale=1.0" name="viewport">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+    <link href="https://fonts.googleapis.com/css?family=Roboto+Mono" rel="stylesheet">
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+    <div class="container-fluid header">
+        <div class="row">
+            <div class="col-sm-4">
+                <ul class="lifes">
+                    <li class="life"> </li>
+                    <li class="life"> </li>
+                    <li class="life"> </li>
+                    <li class="life"> </li>
+                    <li class="life"> </li>
+                </ul>
+            </div>
+            <div class="col-sm-4">
+                <h3 class="name"> Arcade Game </h3>
+            </div>
+            <div class="col-sm-4">
+                <ul class="stars">
+                    <li class="none"> </li>
+                    <li class="none"> </li>
+                    <li class="none"> </li>
+                    <li class="none"> </li>
+                    <li class="none"> </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+
+    <!-- The popup -->
+    <div class="popup">
+        <!-- popup content -->
+        <div class="popup-content">
+            <div class="block">
+                <img alt="done" class="img" src="images/Star.png">
+            </div>
+            <div>   <strong>congratulations..you won</strong>   </div>
+            <button class="play btn btn-success" onclick="playAgain()"> play again </button>
+        </div>
+    </div>
+
+    <script src="js/resources.js"></script>
+    <script src="js/engine.js"></script>
+    <script src="js/app.js"></script>
+
+</body>
+</html>
