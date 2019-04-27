@@ -2,32 +2,34 @@ let win = 0;
 let lose = 0;
 // Enemies our player must avoid
 var Enemy = function (x, y, speed) {
-    // Variables applied to each of our instances go here,
-    // we've provided one for you to get started
-    // The image/sprite for our enemies, this uses
-    // a helper we've provided to easily load images
     this.x = x;
     this.y = y;
     this.speed = speed;
     this.sprite = 'images/enemy-bug.png';
 };
-// Update the enemy's position, required method for game
+// Update the enemy's position
 // Parameter: dt, a time delta between ticks
 Enemy.prototype.update = function (dt) {
-    // You should multiply any movement by the dt parameter
-    // which will ensure the game runs at the same speed for
-    // all computers.
+    //multiply the movement by the dt parameter
     this.x += this.speed * dt;
     if (this.x > 500) {
         this.x = -100;
     }
     checkCollisions(this);
 };
+// Draw the enemy on the screen
+Enemy.prototype.render = function () {
+    ctx.drawImage(Resources.get(this.sprite), this.x, this.y);
+};
+
 let checkCollisions = function (enmy) {
+    //Math.abs(a-b) to returns absolute value of the parameter
+    // if difference between player position and enemys < 50 it is a Collision
     if (Math.abs(player.y - enmy.y) < 50 && Math.abs(player.x - enmy.x) < 50) {
-        console.log('touch!!');
+        //reset player position back to the starting square.
         player.x = 200;
         player.y = 300;
+        //Hearts will get down by 1 
         let life = document.getElementsByClassName("life");
         if (life.length > 0) {
             life[0].className = "lose";
@@ -38,59 +40,45 @@ let checkCollisions = function (enmy) {
         }
     }
 }
-
+// if player lose or wins 5 times reset Hearts to 5 and stars to 0
 function reset() {
     let stars = document.getElementsByClassName("star");
     for (i = 0; i < win; i++) {
         stars[0].className = "none";
     }
-    let lifes = document.getElementsByClassName("lose");
+    let Hearts = document.getElementsByClassName("lose");
     for (i = 0; i < lose; i++) {
-        lifes[0].className = "life";
+        Hearts[0].className = "life";
     }
     lose = 0;
     win = 0;
 }
-// Draw the enemy on the screen, required method for game
-Enemy.prototype.render = function () {
-    ctx.drawImage(Resources.get(this.sprite), this.x, this.y);
-};
-// Now write your own player class
-// This class requires an update(), render() and
-// a handleInput() method.
+
+// player class
 var Player = function (x, y) {
-    // Variables applied to each of our instances go here,
-    // we've provided one for you to get started
-    // The image/sprite for our Player, this uses
-    // a helper we've provided to easily load images
     this.x = x;
     this.y = y;
     this.sprite = 'images/char-boy.png';
 };
-// Update the Player's position, required method for game
-// Parameter: dt, a time delta between ticks
+// Update the Player's position,
 Player.prototype.update = function (dt) {
     // You should multiply any movement by the dt parameter
-    // which will ensure the game runs at the same speed for
-    // all computers.
 };
-// Draw the player on the screen, required method for game
+// Draw the player on the screen
 Player.prototype.render = function () {
     ctx.drawImage(Resources.get(this.sprite), this.x, this.y);
 };
-// Now instantiate your objects.
+// instantiate the objects.
+let player = new Player(200, 300);
 // Place all enemy objects in an array called allEnemies
-// Place the player object in a variable called player
 let allEnemies = [];
 let postion = 60;
-let player = new Player(200, 300);
 for (i = 1; i < 5; i++) {
     let enemy = new Enemy(0, postion, Math.floor(Math.random() * 200) + 50);
     postion += 55;
     allEnemies.push(enemy);
 }
-// This listens for key presses and sends the keys to your
-// Player.handleInput() method. You don't need to modify this.
+// This listens for key presses and sends the keys to Player.handleInput() method. 
 Player.prototype.handleInput = function (keyPress) {
     if (keyPress == 'up') {
         if (player.y > -60) {
@@ -124,21 +112,23 @@ document.addEventListener('keyup', function (e) {
     };
     player.handleInput(allowedKeys[e.keyCode]);
 });
-
+// This method for check if player wins the game and to move back to the starting square.
 function wins() {
     win += 1;
+    //reset player position back to the starting square.
     player.y = 300;
     player.x = 200;
+    // if player wins add star
     if (win < 6) {
         document.getElementsByClassName("none")[0].className = "star";
     }
+    // if player wins the game 5 times open popup
     if (win == 5) {
-        // Get the modal
         let popup = document.getElementsByClassName('popup')[0];
         popup.style.display = "block";
     }
 }
-//
+// if player want to play again reset the game
 function playAgain() {
     let popup = document.getElementsByClassName('popup')[0];
     popup.style.display = "none";
