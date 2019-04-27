@@ -78,31 +78,34 @@ for (i = 1; i < 5; i++) {
     postion += 55;
     allEnemies.push(enemy);
 }
-// This listens for key presses and sends the keys to Player.handleInput() method. 
-Player.prototype.handleInput = function (keyPress) {
-    if (keyPress == 'up') {
+//update player position
+//player can't get out of the board
+//wins if reaches the top of the board
+Player.prototype.handleInput = function (key) {
+    if (key == 'up') {
         if (player.y > -60) {
             player.y -= 30;
         } else {
             wins();
         }
     }
-    if (keyPress == 'down') {
+    if (key == 'down') {
         if (player.y < 420) {
             player.y += 30;
         }
     }
-    if (keyPress == 'left') {
+    if (key == 'left') {
         if (player.x > 0) {
             player.x -= 50;
         }
     }
-    if (keyPress == 'right') {
+    if (key == 'right') {
         if (player.x < 400) {
             player.x += 50;
         }
     }
 }
+// This listens for key presses and sends the keys to Player.handleInput() method. 
 document.addEventListener('keyup', function (e) {
     var allowedKeys = {
         37: 'left',
