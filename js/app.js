@@ -21,9 +21,9 @@ Enemy.prototype.update = function (dt) {
     if (this.x > 500) {
         this.x = -100;
     }
-    check(this);
+    checkCollisions(this);
 };
-let check = function (enmy) {
+let checkCollisions = function (enmy) {
     if (Math.abs(player.y - enmy.y) < 50 && Math.abs(player.x - enmy.x) < 50) {
         console.log('touch!!');
         player.x = 200;
@@ -32,10 +32,8 @@ let check = function (enmy) {
         if (life.length > 0) {
             life[0].className = "lose";
             lose += 1;
-            console.log('lose life : ' + lose);
             if (lose == 5) {
                 reset();
-                console.log('lose reset : ' + lose);
             }
         }
     }
@@ -48,7 +46,6 @@ function reset() {
     }
     let lifes = document.getElementsByClassName("lose");
     for (i = 0; i < lose; i++) {
-        console.log('reset length : ' + lifes.length);
         lifes[0].className = "life";
     }
     lose = 0;
@@ -70,7 +67,7 @@ var Player = function (x, y) {
     this.y = y;
     this.sprite = 'images/char-boy.png';
 };
-// Update the enemy's position, required method for game
+// Update the Player's position, required method for game
 // Parameter: dt, a time delta between ticks
 Player.prototype.update = function (dt) {
     // You should multiply any movement by the dt parameter
